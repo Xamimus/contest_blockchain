@@ -1,18 +1,17 @@
 import hashlib
 import json
-import Wallet
 import os
 
 class Block:
 
-    """ parent_hash = "" """
-
-    transactions = []
-
-    def __init__(self, base_hash=None, hash=None):
-        self.size = self.get_weight()
+    def __init__(self, parent_hash=None, base_hash=None, hash=None):
+        self.parent_hash = parent_hash
+        self.size = 0
+        self.weight = 0
         self.base_hash = base_hash
-        if self.check_hash(base_hash) and self.load(hash):
+        self.hash = hash
+        self.transactions = []
+        if self.check_hash(base_hash) and self.load():
             self.save()
 
     def check_hash(self, base_hash):
@@ -31,28 +30,34 @@ class Block:
     def get_weight(self):
         filename = "content/blocs/" + str(self.hash) + ".json"
         file_stats = os.stat(filename)
-        return file_stats.st_size
+        self.weight = file_stats.st_size
 
     def save(self):
         data = {
             'base_hash': self.base_hash,
             'hash': self.hash,
             'parent_hash': self.parent_hash,
-            'transactions': self.transactions
+            'transactions': self.transactions,
+            'weight': self.weight
             }
         filename = "content/blocs/" + str(self.hash) + ".json"
         with open(filename, 'w') as outfile:
             json.dump(data, outfile)
 
-    def load(self, hash=None):
-        if hash == None:
+    def load(self):
+        if self.hash == None:
             return True
         else:
-            filename = "content/wallets/" + str(hash) + ".json"
-            with open(filename) as json_file:
-                data = json.load(json_file)
-                self.base_hash = data['base_hash']
-                self.hash = data['hash']
-                self.parent_hash = data['parent_hash']
-                self.transactions = data['transactions']
-            return False   
+            try:
+                filename = "content/blocs/" + str(self.hash) + ".json"
+                with open(filename) as json_file:
+                    data = json.load(json_file)
+                    self.base_hash = data['base_hash']
+                    self.hash = data['hash']
+                    self.parent_hash = data['parent_hash']
+                    self.transactions = data['transactions']
+                    self.weight = data['weight']
+                    return False
+            except:
+                print("This block doesn't already exists. Creation of a new one...")
+                return True
