@@ -22,6 +22,7 @@ class Block:
 
     def add_transaction(self, transaction):
         self.transactions.append(transaction)
+        self.get_weight()
         self.save()
 
     def get_transaction():

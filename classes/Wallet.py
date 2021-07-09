@@ -6,7 +6,7 @@ class Wallet:
     def __init__(self, id=None):
         if self.load(id):
             self.unique_id = self.generate_unique_id()
-            self.balance = 0
+            self.balance = 100
             self.history = []
             self.save()
 

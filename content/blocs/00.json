@@ -1,1 +1,1 @@
-{"base_hash": null, "hash": "00", "parent_hash": null, "transactions": [{"id": 0, "saler": 101171254103012972354878941626424419326, "client": 14938570948877436095580126826539516641, "amount": 10}], "weight": 0}
+{"base_hash": null, "hash": "00", "parent_hash": null, "transactions": [{"id": 0, "saler": 14938570948877436095580126826539516641, "client": 129292158010053966166784100344170393664, "amount": 10}], "weight": 212}
