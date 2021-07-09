@@ -1,1 +1,1 @@
-{"base_hash": "00", "hash": "00", "parent_hash": "00", "transactions": []}
+{"base_hash": null, "hash": "00", "parent_hash": null, "transactions": [{"id": 0, "saler": 101171254103012972354878941626424419326, "client": 14938570948877436095580126826539516641, "amount": 10}], "weight": 0}

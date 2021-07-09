@@ -11,18 +11,18 @@ class Block:
         self.base_hash = base_hash
         self.hash = hash
         self.transactions = []
-        if self.check_hash(base_hash) and self.load():
+        if self.check_hash() and self.load():
             self.save()
 
-    def check_hash(self, base_hash):
-        self.hash = hashlib.sha256(base_hash.encode()).hexdigest()
-        if self.hash[:4] == "0000":
+    def check_hash(self):
+        if self.hash[:4] == "0000" and self.hash != None:
             return True
         else:
             return False
 
     def add_transaction(self, transaction):
         self.transactions.append(transaction)
+        self.save()
 
     def get_transaction():
         pass
@@ -57,7 +57,7 @@ class Block:
                     self.parent_hash = data['parent_hash']
                     self.transactions = data['transactions']
                     self.weight = data['weight']
-                    return False
             except:
                 print("This block doesn't already exists. Creation of a new one...")
                 return True
+        return False

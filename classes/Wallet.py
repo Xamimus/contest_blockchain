@@ -2,13 +2,12 @@ import uuid
 import json
 
 class Wallet:
-    balance = 0
-
-    history = []
 
     def __init__(self, id=None):
         if self.load(id):
             self.unique_id = self.generate_unique_id()
+            self.balance = 0
+            self.history = []
             self.save()
 
     def generate_unique_id(self):
@@ -24,9 +23,11 @@ class Wallet:
 
     def add_balance(self, int):
         self.balance += int
+        self.save()
 
     def sub_balance(self, int):
         self.balance -= int
+        self.save()
 
     def send():
         pass
@@ -43,6 +44,7 @@ class Wallet:
 
     def load(self, id=None):
         if id == None:
+            print("Wallet doesn't exists. Creation of a new one...")
             return True
         else:
             filename = "content/wallets/" + str(id) + ".json"
@@ -53,4 +55,6 @@ class Wallet:
                 self.history = data['history']
             return False   
 
-""" a = Wallet(75878988895259417904370636065377472445) """
+    def add_history(self, transaction_id):
+        self.history.append(transaction_id)
+
