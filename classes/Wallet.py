@@ -6,14 +6,15 @@ class Wallet:
 
     history = []
 
-    def __init__(self):
-        self.unique_id = self.generate_unique_id()
-        self.save()
+    def __init__(self, id = None):
+        if self.load(id):
+            self.unique_id = self.generate_unique_id()
+            self.save()
 
     def generate_unique_id(self):
         notChecked = True
         while notChecked:
-            id = uuid.uuid1().int
+            id = uuid.uuid4().int
             filename = "content/wallets/" + str(id) + ".json"
             try:
                 with open(filename): pass
@@ -40,15 +41,16 @@ class Wallet:
         with open(filename, 'w') as outfile:
             json.dump(data, outfile)
 
-    def load(self, id):
-        filename = "content/wallets/" + str(id) + ".json"
-        with open(filename) as json_file:
-            data = json.load(json_file)
-            for p in data:
-                self.unique_id = p['unique_id']
-                self.balance = p['balance']
-                self.history = p['history']
+    def load(self, id=None):
+        if id == None:
+            return True
+        else:
+            filename = "content/wallets/" + str(id) + ".json"
+            with open(filename) as json_file:
+                data = json.load(json_file)
+                self.unique_id = data['unique_id']
+                self.balance = data['balance']
+                self.history = data['history']
+            return False   
 
-a = Wallet()
-print(a.unique_id)
-
+""" a = Wallet(75878988895259417904370636065377472445) """
